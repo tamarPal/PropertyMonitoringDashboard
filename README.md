@@ -1,98 +1,76 @@
 # Property Monitoring Dashboard
 
 ## Overview
-This system allows the user to enter an APN (Assessor Parcel Number) and receive all cases related to that property. The system fetches property data and cases from an external source, processes the data, and presents it in a clear dashboard. To improve performance, the system stores fetched data in a local SQLite database, allowing faster repeated searches and reducing unnecessary external requests.
+This system allows the user to enter an APN (Assessor Parcel Number) and receive all cases related to that property. The system fetches data from an external source, processes it, and presents it in a clear dashboard. To improve performance, the system stores fetched data in a local SQLite database.
 
 ## How the system works
-The user enters an APN in the search field. The backend fetches the property details and all related cases from an external source. The data is then stored in SQLite. On future searches, if the data already exists and is still relevant, it is returned directly from SQLite for fast performance. If needed, the data can be refreshed from the source.
+The user enters an APN. The backend fetches property details and related cases, processes the data, and saves it in SQLite. On repeated searches, data is returned from SQLite for faster performance, unless a refresh is required.
 
-## What the dashboard shows
-The system displays property details such as APN,  
-It displays a summary of cases including total cases, open cases, closed cases, urgent cases, overdue cases, new cases and in-progress cases. In addition, a table of all cases is shown with case ID, case type, created date, compliance date, closed date and status.
+## Run Instructions
 
-## Status meanings
-- URGENT – cases where the compliance date is close
-- OVERDUE – cases where the compliance date has already passed
-- NEW – recently opened cases
-- IN_PROGRESS – open cases that are not urgent and not overdue
-- CLOSED – closed cases
+Install dependencies:
+npm install
+cd server
+npm install
+cd ..
+cd client
+npm install
+cd ..
 
-## Data storage with SQLite
-The project uses a local SQLite database to store fetched results. The main tables are:
-- properties – stores property information
-- cases – stores all cases related to each property
+Run the project:
+npm run dev
 
-Using SQLite allows faster repeated searches, simple local storage, no need for a separate database server and reduced load on the external source.
+This command runs both the backend and frontend. No need to open multiple terminals.
 
-## Installation and run instructions
+Frontend: http://localhost:5173  
+Backend: http://localhost:5000  
 
-### Prerequisites
-Make sure the following are installed:
-- Node.js
-- npm
+## Data Design – What fields were saved and why
+The system stores the following fields for each case:
 
-### Project structure
-The project is expected to contain:
-- server/
-- client/
-- package.json in the root folder
+- Case ID – unique identifier  
+- Case Type – describes the case  
+- Created Date – helps understand if the case is new or old  
+- Compliance Date – helps determine urgency  
+- Closed Date – shows if the case is open or closed  
 
-### Install dependencies
-Run these commands exactly as written:
+These fields were chosen because they provide the most important information for decision making:
+- Is the case new or old  
+- Is it urgent or overdue  
+- Is it still open or already closed  
 
-    npm install
-    cd server
-    npm install
-    cd ..
-    cd client
-    npm install
-    cd ..
+## Understanding the requirement
+The goal was to extract meaningful information from a complex external system and present it in a clear and useful way. The focus was on identifying the most important fields and making the data easy to understand.
 
-### Run the project
-Run this command from the root folder:
+## Data Presentation
+The system presents data in two ways:
 
-    npm run dev
+Summary:
+- Total cases  
+- Open / Closed  
+- Urgent  
+- Overdue  
+- New  
 
-This command starts both:
-- the backend server
-- the frontend client
+Table:
+- Case ID  
+- Type  
+- Dates  
+- Status  
 
-There is no need to open two separate terminals.
+This allows quick understanding and deeper inspection.
 
-### Default addresses
-- Frontend: http://localhost:5173
-- Backend: http://localhost:5000
+## Key Design Principles
+- Focus on meaningful data  
+- Clear and simple UI  
+- Easy to run system  
+- Reliable and practical solution  
 
-## Clearing SQLite cache
-If you want to force a fresh load of the data, delete the SQLite database file and run the project again.
+## Future Improvements
+If more time was available, I would expand the system to analyze multiple properties and include a more comprehensive analysis across all property types and case categories. I would also improve database structure and security, deploy the system online, enhance UI/UX, and add smarter caching and real-time updates.
 
-If the database file is inside the server folder, use:
-
-    del server\property_cases.db
-
-Then run again:
-
-    npm run dev
-
-The database will be recreated automatically on the next run.
-
-## Future improvements
-If more time is available in the future, the project can be improved by:
-- deploying it online
-- storing the data in a more structured and secure way
-- improving database design
-- improving performance and refresh strategy
-- improving UI/UX
-- adding better error handling and monitoring
-
-## Technologies used
-- Node.js
-- Express
-- React
-- SQLite
-- Axios
-- Cheerio
-- Playwright
+## Technologies Used
+Node.js, Express, React, SQLite, Axios, Cheerio, Playwright
 
 ## Summary
-This project provides a complete property case dashboard based on APN search. It combines external data fetching, local SQLite caching, backend processing and frontend presentation to deliver fast and useful results in a single interface.
+A complete system that retrieves, processes and presents property case data in a clear and actionable way, focusing on simplicity, performance and usability.
