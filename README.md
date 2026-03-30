@@ -66,6 +66,13 @@ Table:
 This allows quick understanding and deeper inspection.
 I saved the fields for the date of receipt,Compliance Date,and date of closed to get an indication of the status of the review.
 
+## Status Definitions
+- NEW – recently created cases with no compliance date yet  
+- IN_PROGRESS – open cases that are not urgent and not overdue  
+- URGENT – cases with a compliance date approaching soon  
+- OVERDUE – cases where the compliance date has already passed  
+- CLOSED – cases that have been completed and closed 
+ 
 ## Key Design Principles
 - Focus on meaningful data  
 - Clear and simple UI  
