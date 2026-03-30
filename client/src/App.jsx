@@ -76,7 +76,7 @@ function App() {
   return (
     <div className="app-shell">
       <div className="app-container">
-        <h1 className="page-title">Property Monitoring Dashboard</h1>
+        <h1 className="page-title">Search Property Cases</h1>
 
         <div className="search-bar">
           <input

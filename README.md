@@ -6,6 +6,11 @@ This system allows the user to enter an APN (Assessor Parcel Number) and receive
 ## How the system works
 The user enters an APN. The backend fetches property details and related cases, processes the data, and saves it in SQLite. On repeated searches, data is returned from SQLite for faster performance, unless a refresh is required.
 
+## Performance Notes
+The initial data fetch may take approximately 2 minutes, as it requires scraping and processing data from the external source. However, subsequent searches are significantly faster (around 1 second), thanks to the local SQLite caching.
+
+If more time were available, I would further optimize the initial loading time to improve the overall user experience.
+
 ## Run Instructions
 
 Install dependencies:
@@ -59,6 +64,7 @@ Table:
 - Status  
 
 This allows quick understanding and deeper inspection.
+I saved the fields for the date of receipt,Compliance Date,and date of closed to get an indication of the status of the review.
 
 ## Key Design Principles
 - Focus on meaningful data  
@@ -67,7 +73,7 @@ This allows quick understanding and deeper inspection.
 - Reliable and practical solution  
 
 ## Future Improvements
-If more time was available, I would expand the system to analyze multiple properties and include a more comprehensive analysis across all property types and case categories. I would also improve database structure and security, deploy the system online, enhance UI/UX, and add smarter caching and real-time updates.
+If more time was available, I would expand the system to analyze multiple properties and include a more comprehensive analysis across all property types and case categories. I would also improve database structure and security, deploy the system online, enhance UI/UX, and add smarter caching and real-time updates. Additionally, I would focus on improving the initial data loading performance.
 
 ## Technologies Used
 Node.js, Express, React, SQLite, Axios, Cheerio, Playwright
